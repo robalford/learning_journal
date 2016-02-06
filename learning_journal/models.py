@@ -34,12 +34,18 @@ Index('my_index', MyModel.name, unique=True, mysql_length=255)
 class Entry(Base):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True)
-    title = Column(String, length=255)
+    title = Column(String(255), unique=True)
     body = Column(Text)
-    created = Column(DateTime, default=datetime.now())
-    edited = Column(DateTime, default=datetime.now())
+    created = Column(DateTime, default=datetime.now)  # no () !
+    edited = Column(DateTime, default=datetime.now)
+
+    # not sure if passing current session as arg is the best way to do this
+    @classmethod
+    def all(cls, session):
+        query = session.query(cls).order_by(cls.created.desc())
+        return [entry for entry in query]
 
     @classmethod
-    def all(cls, session):  # not sure if passing session as arg is the best way to do this
-        query = session.query(cls).all().order_by(cls.created)
+    def by_id(cls, session, id):
+        query = session.query(cls).get(id)
         return query
