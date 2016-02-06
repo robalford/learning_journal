@@ -41,11 +41,11 @@ class Entry(Base):
 
     # not sure if passing current session as arg is the best way to do this
     @classmethod
-    def all(cls, session):
-        query = session.query(cls).order_by(cls.created.desc())
+    def all(cls):
+        query = DBSession.query(cls).order_by(cls.created.desc())
         return [entry for entry in query]
 
     @classmethod
-    def by_id(cls, session, id):
-        query = session.query(cls).get(id)
+    def by_id(cls, id):
+        query = DBSession.query(cls).get(id)
         return query
