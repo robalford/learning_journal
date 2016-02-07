@@ -7,6 +7,8 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    Unicode,
+    UnicodeText,
     )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -34,8 +36,8 @@ Index('my_index', MyModel.name, unique=True, mysql_length=255)
 class Entry(Base):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True)
-    title = Column(String(255), unique=True)
-    body = Column(Text)
+    title = Column(Unicode(255), nullable=False, unique=True)
+    body = Column(UnicodeText)
     created = Column(DateTime, default=datetime.now)  # no () !
     edited = Column(DateTime, default=datetime.now)
 
