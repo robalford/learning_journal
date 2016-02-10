@@ -32,21 +32,27 @@ class MyModel(Base):
 
 Index('my_index', MyModel.name, unique=True, mysql_length=255)
 
+# revised during class -- added utcnow, onupdate, session=None stuff for
+# querying methods
 
 class Entry(Base):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True)
     title = Column(Unicode(255), nullable=False, unique=True)
     body = Column(UnicodeText)
-    created = Column(DateTime, default=datetime.now)  # no () !
-    edited = Column(DateTime, default=datetime.now)
+    created = Column(DateTime, default=datetime.utcnow)  # no () !
+    edited = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @classmethod
-    def all(cls):
-        query = DBSession.query(cls).order_by(cls.created.desc())
+    def all(cls, session=None):
+        if session is None:
+            session = DBSession
+        query = session.query(cls).order_by(cls.created.desc())
         return [entry for entry in query]
 
     @classmethod
-    def by_id(cls, id):
-        query = DBSession.query(cls).get(id)
+    def by_id(cls, id, session=None):
+        if session is None:
+            session = DBSession
+        query = session.query(cls).get(id)
         return query
