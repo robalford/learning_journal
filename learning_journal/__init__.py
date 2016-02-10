@@ -18,6 +18,7 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
     config.add_route('detail', '/journal/{id:\d+}')
-    config.add_route('action', '/journal/{action}')
+    config.add_route('create', '/journal/create')
+    config.add_route('edit', '/journal/edit/{id:\d+}')
     config.scan()
     return config.make_wsgi_app()

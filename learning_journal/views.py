@@ -12,7 +12,7 @@ from .models import (
     )
 
 from pyramid.httpexceptions import HTTPFound
-from .forms import EntryCreateForm
+from .forms import EntryCreateForm, EntryEditForm
 
 
 # @view_config(route_name='home', renderer='templates/mytemplate.pt')
@@ -36,7 +36,7 @@ def view(request):
         return HTTPNotFound()
     return {'entry': entry}
 
-@view_config(route_name='action', match_param='action=create', renderer='templates/edit.jinja2')
+@view_config(route_name='create', renderer='templates/edit.jinja2')
 def create(request):
     entry = Entry()
     form = EntryCreateForm(request.POST)
@@ -44,12 +44,20 @@ def create(request):
         form.populate_obj(entry)
         DBSession.add(entry)
         return HTTPFound(location=request.route_url('home'))  # http redirect to home page
-    return {'form': form, 'action': request.matchdict.get('action')}
+    return {'form': form, 'action': request.matchdict.get('action')} #need to change this for new routes/views
 
-@view_config(route_name='action', match_param='action=edit', renderer='string')
+@view_config(route_name='edit', renderer='templates/edit.jinja2')
 def update(request):
-    return 'edit page'
-
+    this_id = request.matchdict.get('id', -1)
+    entry = Entry.by_id(this_id)
+    if not entry:
+        return HTTPNotFound()
+    form = EntryEditForm(request.POST, entry)
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry)
+        DBSession.add(entry)
+        return HTTPFound(location=request.route_url('home'))  # http redirect to home page
+    return {'form': form, 'action': request.matchdict.get('action')}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
