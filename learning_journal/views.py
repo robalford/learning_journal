@@ -44,7 +44,7 @@ def create(request):
         form.populate_obj(entry)
         DBSession.add(entry)
         return HTTPFound(location=request.route_url('home'))  # http redirect to home page
-    return {'form': form, 'action': request.matchdict.get('action')} #need to change this for new routes/views
+    return {'form': form} #need to change this for new routes/views. erased action
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def update(request):
@@ -56,8 +56,9 @@ def update(request):
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
         DBSession.add(entry)
+        # change this to route to detail view
         return HTTPFound(location=request.route_url('home'))  # http redirect to home page
-    return {'form': form, 'action': request.matchdict.get('action')}
+    return {'form': form} # fix this for new routes??? erased action (see cris's file to compare)
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
