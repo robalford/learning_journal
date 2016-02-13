@@ -9,10 +9,10 @@
   </head>
   <body>
     <header>
+      <h1 id="title">My Python Journal</h1>
       <nav><ul><li><a href="{{ request.route_url('home') }}">Home</a></li></ul></nav>
     </header>
     <main>
-      <h1>My Python Journal</h1>
       <section id="content">{% block body %}{% endblock %}</section>
     </main>
     <footer><p>Created in the UW PCE Python Certificate Program</p></footer>
