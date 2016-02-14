@@ -32,6 +32,19 @@ class MyModel(Base):
 
 Index('my_index', MyModel.name, unique=True, mysql_length=255)
 
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(Unicode(255), nullable=False, unique=True, index=True)
+    password = Column(Unicode(255), nullable=False)
+
+    @classmethod
+    def by_username(cls, username, session=None):
+        if session is None:
+            session = DBSession
+        query = session.query(cls).filter(User.username == username)
+        return query
+
 # revised during class -- added utcnow, onupdate, session=None stuff for
 # querying methods
 

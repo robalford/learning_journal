@@ -39,7 +39,7 @@ def view(request):
 @view_config(route_name='create', renderer='templates/edit.jinja2')
 def create(request):
     entry = Entry()
-    form = EntryCreateForm(request.POST)
+    form = EntryCreateForm(request.POST) # adjust row and column values here? see form widgets
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
         DBSession.add(entry)

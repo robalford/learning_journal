@@ -27,7 +27,7 @@ header a:visited,
 footer a:visited {
     color:#5cd65c;
 }
-#title {
+#site-title {
     margin-top:0;
     padding-top:0.75em;
 }
@@ -51,7 +51,12 @@ header ul li a{
 header ul li a:hover {
     color:#ff0000
 }
-main{padding:0 0.75em 1em}
+main{
+    padding:0 0.75em 1em;
+    /*added these styles to make content scrollable*/
+    /*height: 450px;
+    overflow: auto;*/
+    }
 main:after{
     content:"";
     display:table;
@@ -78,6 +83,8 @@ main aside .field textarea{
     width:83%}
 main aside .control_row input{
     margin-left:16%}
+
+
 main ul {
     list-style:none;
 }
@@ -98,9 +105,27 @@ main li a:visited {
 main li a:hover {
     color: #5cd65c;
 }
+
 footer{
+    position: absolute;
+    width: 100%;
+    bottom:0px;
     padding: 1em 0.75em;
     background: #222;
     color: #5cd65c;
     border-top: 3px solid #fff;
-    border-bottom: 3px solid #fff;}
+}
+    /*border-bottom: 3px solid #fff;}*/
+
+/*Create/Edit page styles*/
+
+#title {
+    margin-top: 2em;
+    display: block;
+}
+#body {
+    margin-top: 2em;
+    width: 30em;
+    height: 15em;
+    display: block;
+}
