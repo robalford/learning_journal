@@ -42,8 +42,8 @@ class User(Base):
     def by_username(cls, username, session=None):
         if session is None:
             session = DBSession
-        query = session.query(cls).filter(User.username == username)
-        return query
+        query = session.query(cls).filter(cls.username == username)
+        return query.one()  # not sure if this is the best way to do this
 
 # revised during class -- added utcnow, onupdate, session=None stuff for
 # querying methods
