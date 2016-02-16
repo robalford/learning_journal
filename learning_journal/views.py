@@ -39,7 +39,7 @@ def view(request):
 @view_config(route_name='create', renderer='templates/edit.jinja2')
 def create(request):
     entry = Entry()
-    form = EntryCreateForm(request.POST) # adjust row and column values here? see form widgets
+    form = EntryCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
         DBSession.add(entry)
@@ -55,8 +55,6 @@ def update(request):
     form = EntryEditForm(request.POST, entry)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
-        DBSession.add(entry)
-        # change this to route to detail view
         return HTTPFound(location=request.route_url('detail', id=this_id))  # http redirect to home page
     return {'form': form} # erased action (see cris's file to compare)
 
