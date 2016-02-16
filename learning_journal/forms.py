@@ -11,7 +11,7 @@ class EntryCreateForm(Form):
         'Entry body',
         [validators.Length(min=1)],
         filters=[strip_filter])
-# use inheritance here
+# use inheritance here?
 class EntryEditForm(Form):
     id = HiddenField('Entry ID') # add validators?
     title = TextField(

@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Python Learning Journal</title>
+    <title>&gt;&gt;&gt; python_learning_journal()</title>
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link href="{{ request.static_path('learning_journal:static/styles.css') }}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <header>
-      <h1 id="site-title">My Python Journal</h1>
-      <nav><ul><li><a href="{{ request.route_url('home') }}">Home</a></li></ul></nav>
+      <h1 id="site-title"><a href="{{ request.route_url('home') }}">&gt;&gt;&gt; python_learning_journal()</a></h1>
+      <!-- <nav><ul><li><a href="{{ request.route_url('home') }}">Home</a></li></ul></nav> -->
     </header>
     <main>
       <section id="content">{% block body %}{% endblock %}</section>
