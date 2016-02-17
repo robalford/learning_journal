@@ -43,5 +43,5 @@ def main(argv=sys.argv):
     with transaction.manager:
         password = os.environ.get('ADMIN_PASSWORD', 'admin')
         encrypted = password_context.encrypt(password)
-        admin = User(name=u'admin', password=encrypted)
+        admin = User(username=u'admin', password=encrypted)
         DBSession.add(admin)
