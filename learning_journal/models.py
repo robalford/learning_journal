@@ -20,8 +20,12 @@ from sqlalchemy.orm import (
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
+from passlib.context import CryptContext
+
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
+
+password_context = CryptContext(schemes=['pbkdf2_sha512'])
 
 
 class MyModel(Base):
@@ -39,11 +43,14 @@ class User(Base):
     password = Column(Unicode(255), nullable=False)
 
     @classmethod
-    def by_username(cls, username, session=None):
+    def by_name(cls, username, session=None):
         if session is None:
             session = DBSession
         query = session.query(cls).filter(cls.username == username)
         return query.one()  # not sure if this is the best way to do this
+
+    def verify_password(self, password):
+        return password_context.verify(password, self.password)
 
 # revised during class -- added utcnow, onupdate, session=None stuff for
 # querying methods

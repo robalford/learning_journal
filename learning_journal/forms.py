@@ -1,4 +1,4 @@
-from wtforms import Form, TextField, TextAreaField, validators, HiddenField
+from wtforms import Form, TextField, TextAreaField, validators, HiddenField, PasswordField
 
 strip_filter = lambda x: x.strip() if x else None
 
@@ -14,3 +14,11 @@ class EntryCreateForm(Form):
 
 class EntryEditForm(EntryCreateForm):
     id = HiddenField('Entry ID') # add validators?
+
+class LoginForm(Form):
+    username = TextField(
+        'Username', [validators.Length(min=1, max=255)]
+    )
+    password = PasswordField(
+        'Password', [validators.Length(min=1, max=255)]
+    )
